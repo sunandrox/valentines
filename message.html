@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>My Valentine 🤍</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+/* DIARY BACKGROUND */
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background:
+    repeating-linear-gradient(
+      to bottom,
+      #f6b1c3 0px,
+      #f6b1c3 30px,
+      #ee9fb3 31px
+    );
+  color: white;
+  text-align: center;
+  overflow-x: hidden;
+}
+
+.container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.section { display: none; }
+.section.active { display: block; }
+
+button {
+  padding: 16px 42px;
+  font-size: 1.2rem;
+  border-radius: 50px;
+  border: none;
+  background: #ff4d6d;
+  color: white;
+  cursor: pointer;
+  margin-top: 30px;
+  transition: transform 0.2s ease;
+}
+button:hover { transform: scale(1.08); }
+button:active { transform: scale(0.95); }
+
+#no {
+  background: white;
+  color: #ff4d6d;
+  position: absolute;
+  transition: left 0.25s ease, top 0.25s ease;
+}
+
+/* BOX */
+.box {
+  position: relative;
+  max-width: 800px;
+  background: rgba(255,255,255,0.28);
+  padding: 40px;
+  border-radius: 35px;
+  font-size: 1.2rem;
+  line-height: 1.8;
+  text-align: left;
+  animation: pulse 4s infinite;
+}
+
+/* CENTER */
+.center { text-align: center; }
+
+/* LETTER */
+#letterBox { white-space: pre-wrap; }
+
+/* LETTER TITLE */
+.letter-title {
+  text-align: center;
+  font-size: 2.8rem;
+  font-weight: 600;
+  margin-bottom: 30px;
+  letter-spacing: 1px;
+  text-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+/* PHOTO */
+.photo-wrap { position: relative; }
+
+img {
+  max-width: 100%;
+  max-height: 65vh;
+  border-radius: 30px;
+  box-shadow: 0 25px 45px rgba(0,0,0,0.35);
+}
+
+/* SIDE TEXT */
+.side-text {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1rem;
+  color: rgba(0,0,0,0.25);
+  letter-spacing: 2px;
+}
+.side-left { left: -120px; }
+
+/* CAPTION */
+.caption {
+  margin-top: 25px;
+  background: rgba(255,255,255,0.28);
+  padding: 22px;
+  border-radius: 30px;
+  font-size: 1.2rem;
+}
+
+/* FINAL */
+.final {
+  font-size: 2.4rem;
+  text-align: center;
+}
+.final small {
+  display: block;
+  font-size: 1.4rem;
+  margin-top: 25px;
+}
+
+/* HEARTS */
+.heart {
+  position: fixed;
+  font-size: 20px;
+  animation: floatUp 4s linear forwards;
+  pointer-events: none;
+}
+
+/* ANIMATIONS */
+@keyframes floatUp {
+  from { transform: translateY(100vh); opacity: 1; }
+  to { transform: translateY(-10vh); opacity: 0; }
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+  100% { transform: scale(1); }
+}
+
+/* ================= ADDED: RAINING HEARTS ================= */
+
+.rain-heart {
+  position: fixed;
+  top: -10vh;
+  font-size: 18px;
+  animation: rainFall linear forwards;
+  pointer-events: none;
+  opacity: 0.9;
+}
+
+@keyframes rainFall {
+  from { transform: translateY(-10vh); }
+  to { transform: translateY(110vh); }
+}
+</style>
+</head>
+
+<body>
+
+<!-- BACKGROUND MUSIC -->
+<audio id="bgMusic" loop>
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<div class="container">
+
+<!-- INTRO -->
+<div class="section active" id="intro">
+  <div class="box center">
+    <h1>Hello pattuuuu 🤍</h1>
+    <p>Will you be my Valentine?</p>
+    <button onclick="showYay()">YES</button>
+    <button id="no" onmouseover="moveNo()">NO</button>
+  </div>
+</div>
+
+<!-- YAY -->
+<div class="section" id="yay">
+  <div class="box center">
+    <p>
+      Yayyy 🤍<br><br>
+      Thank you for choosing me as your Valentine.<br>
+      My heart feels full knowing it’s you.<br><br>
+      You are my today, my tomorrow,<br>
+      and my always.
+    </p>
+    <button onclick="startLetter()">Click here for a surprise</button>
+  </div>
+</div>
+
+<!-- LETTER -->
+<div class="section" id="letter">
+  <div class="box">
+    <div class="letter-title">Happy Valentine’s Day &lt;333</div>
+    <div id="letterBox"></div>
+  </div>
+  <button id="letterBtn" style="display:none" onclick="showPhoto(0)">
+    Click for more surprises
+  </button>
+</div>
+
+<!-- PHOTOS -->
+<div class="section" id="photos">
+  <div class="photo-wrap">
+    <div class="side-text side-left" id="sideLeft"></div>
+    <img id="photo">
+  </div>
+  <div class="caption" id="caption"></div>
+  <button onclick="nextPhoto()">Click for more surprises</button>
+</div>
+
+<!-- FINAL -->
+<div class="section" id="final">
+  <div class="final">
+    HAPPY VALENTINE’S DAY pattu 🤍
+    <small>
+      I love you so much.<br>
+      Thank you for being my heart,<br>
+      my peace,<br>
+      and my forever.
+    </small>
+    <button onclick="replay()">Replay our love story</button>
+  </div>
+</div>
+
+</div>
+
+<script>
+// NAV
+function show(id) {
+  document.querySelectorAll(".section").forEach(s => s.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+  heartBurst();
+}
+
+// PLAY MUSIC ON YES (WITH FADE-IN)
+function showYay() {
+  const music = document.getElementById("bgMusic");
+  music.volume = 0;
+  music.play();
+
+  let vol = 0;
+  const fade = setInterval(() => {
+    if (vol < 0.5) {
+      vol += 0.05;
+      music.volume = vol;
+    } else {
+      clearInterval(fade);
+    }
+  }, 200);
+
+  show("yay");
+}
+
+// NO BUTTON STAYS INSIDE BOX
+function moveNo() {
+  const no = document.getElementById("no");
+  const box = no.parentElement;
+
+  const maxX = box.clientWidth - no.offsetWidth - 10;
+  const maxY = box.clientHeight - no.offsetHeight - 10;
+
+  no.style.left = Math.random() * maxX + "px";
+  no.style.top = Math.random() * maxY + "px";
+}
+
+// HEART BURST
+function heartBurst() {
+  for (let i = 0; i < 10; i++) {
+    const h = document.createElement("div");
+    h.className = "heart";
+    h.innerText = "❤";
+    h.style.left = Math.random() * 100 + "vw";
+    document.body.appendChild(h);
+    setTimeout(() => h.remove(), 4000);
+  }
+}
+
+// LETTER
+const letterText = `
+ Hello Love. Happy valentine's day da pattu. Ur my greatest never ending adventure.I love you soo much till the end of the world. Gonna be our first valentine's day. You make me the most happiest person i just don't say it summa da I really mean it. No matter how bad the day gets one message from you literally cancels everthing. The first time we met in phoenixs mall it was the best day. I was waiting at the entrance 
+And suddenly I saw a head pop up and waved at me
+At that time I was speechless I was lost in that distant smile u gave ur beauty and ur eyes and ur looks. I did hesitate to hug you but  u gave the sign and ive never
+Experienced such wonderful hug da. I got to smell ur hair it was soo amazing that's when I felt he touch. It was amazing magical. I was soo happy to meet you. U've really shown what true love is to me and I hope I've done the same. And like we talked about no matter the problem we face it together. It's u and me against the problem. I really have this fear of loosing you da but ppl say or chatgpt says it's called attachment but love when u care love someone that's a humanly naturally feeling. I get to be myself with you and i love it when ur
+Happy it makes me happy too. 
+
+I'll tell u why i love you da. It's not just cuz of ur looks. First your eyes 🫠 i could drown in them they are the most beautiful things I've ever seen. I love your eyes 
+And then ur smile🥹 it lights me up u bring a charm out of it and when u laugh and giggle it's sooo fucking cutee.
+And more over your just as beautiful physically as the person u are internally 🫠🥹.and how u take care,value,notice every tiny details🫠.  I've fallen for u deep love.
+Ever time I do fall deeper and my love for u doesn't fade but keeps growing.
+Ik that u forgot silent u get jealous u feel helpless but that's being human pattu.
+there  is nothing in this world i would do  to keep u happy da.
+I really hope i love you right give u all that u deserve 
+And pls I might do mistakes but I'm damn sure it won't be on purpose.
+
+I cannot promise you that i can love you perfectly because there isn't a word perfect when it comes to love but I would love you endlessly till my last breath.
+
+When I'm w you i get lost in a good way. I really feel safe w you thats why i cry when I'm w you. Thats how secure u make me feel.
+
+And like u said if I had to go through all these years of hardships and struggles just to be with you then Ill more than gladly do it and live then again. Cus u literally all the manifestations late night crashouts the prayers I've asked for.
+
+You really push urself nigga. Health ah pathuko pattu 
+i love you sooooo muchhhhhhhh.
+IM DANGEROUSLY IN LOVE WITH YOU PATTU.
+
+And about the chatgpt saying things about us 🫠 pls don't overthink that da. Let's prove that improving ourself and staying in a  relationship is possible if it's with the right person. I would wait for youuuu how evenr long it takes
+
+From now on they say end of honeymoon phase i don't know about that da but my feelings for you is never gonna change. I'll always try my best to keep u happy da. 
+
+IM GOING TO MARRY YOU💍
+ur the first person i wanna look at when I wake up and spend the bad and good times w you. Together.
+the only thing the kids have to worry about is then telling us stoping kissing every single time 
+And not stop fighting 
+And I thenn saying if i want a life partner it should be like mom and dad(US) 🫠🥹
+ 
+I LOVE YOU SO MUCH RM NETRA
+`;
+
+function startLetter() {
+  show("letter");
+  const box = document.getElementById("letterBox");
+  const btn = document.getElementById("letterBtn");
+  box.innerHTML = "";
+  btn.style.display = "none";
+
+  const words = letterText.split(" ");
+  let i = 0;
+
+  const interval = setInterval(() => {
+    box.innerHTML += words[i] + " ";
+    i++;
+    if (i >= words.length) {
+      clearInterval(interval);
+      btn.style.display = "inline-block";
+    }
+  }, 80);
+}
+
+// PHOTOS
+const photos = [
+  { src:"photo1.jpg", cap:"In your arms is where I belong forever.", side:"my safe place" },
+  { src:"photo2.jpg", cap:"In my arms, where you’ll always stay.", side:"always with you" },
+  { src:"photo3.jpg", cap:"You will forever be my baby.", side:"my comfort" },
+  { src:"photo4.jpg", cap:"im good at swimming though i still happen to drown in them.", side:"magical" },
+  { src:"photo5.jpg", cap:"I promise to always keep you smiling.", side:"my happiness" },
+  { src:"photo6.jpg", cap:"you are my forever my safe place.", side:"forever" },
+  { src:"photo7.jpg", cap:"ur kiss makes me go crazy.", side:"🫠🫠" },
+  { src:"photo8.jpg", cap:"You will always be my favorite place.", side:"home" }
+];
+
+let index = 0;
+
+function showPhoto(i) {
+  index = i;
+  show("photos");
+  document.getElementById("photo").src = photos[i].src;
+  document.getElementById("caption").innerText = photos[i].cap;
+  document.getElementById("sideLeft").innerText = photos[i].side;
+}
+
+function nextPhoto() {
+  index++;
+  if (index < photos.length) showPhoto(index);
+  else show("final");
+}
+
+function replay() {
+  index = 0;
+  document.getElementById("letterBox").innerHTML = "";
+  document.getElementById("letterBtn").style.display = "none";
+  show("intro");
+}
+
+/* =============== ADDED: CONTINUOUS RAINING HEARTS =============== */
+
+function startHeartRain() {
+  setInterval(() => {
+    const heart = document.createElement("div");
+    heart.className = "rain-heart";
+    heart.innerText = "❤";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.fontSize = 14 + Math.random() * 16 + "px";
+    heart.style.animationDuration = 3 + Math.random() * 3 + "s";
+    document.body.appendChild(heart);
+
+    setTimeout(() => heart.remove(), 7000);
+  }, 300);
+}
+
+startHeartRain();
+</script>
+
+</body>
+</html>
